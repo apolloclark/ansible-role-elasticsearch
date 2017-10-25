@@ -36,9 +36,9 @@ elasticsearch_defaults:
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html
   network:
-    host: 0.0.0.0
-    bind_host: 0.0.0.0
-    publish_host: 0.0.0.0
+    host: "_local_"
+    bind_host: "_local_"
+    publish_host: "_local_"
     
     # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html#tcp-settings
     tcp:
