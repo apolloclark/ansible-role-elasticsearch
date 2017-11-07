@@ -51,6 +51,12 @@
   apt: deb=/opt/elasticsearch.deb
   when: (elasticsearch_combined.version != '5.x')
 
+# http://docs.ansible.com/ansible/latest/service_module.html
+- name: Make sure Elasticsearch autostarts
+  service:
+    name: elasticsearch
+    enabled: yes
+
 - name: Change Elasticsearch's memory usage to 512MB
   lineinfile:
     dest: /etc/elasticsearch/jvm.options
@@ -75,6 +81,7 @@
     owner: root
     group: root
     mode: 0644
+  when: "elasticsearch_combined.install_only != 'true'"
 
 - name: Restart Elasticsearch
   service:

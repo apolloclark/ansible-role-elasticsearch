@@ -12,6 +12,7 @@ elasticsearch_defaults:
   daemon: "elasticsearch"
   version: "5.x"
   config_include_dir: "/etc/elasticsearch/"
+  install_only: "false"
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html
   # https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html
