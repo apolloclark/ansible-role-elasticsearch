@@ -1,4 +1,4 @@
-# Ansible Role: metricbeat
+# Ansible Role: elasticsearhc
 
 Ansible Role to install and configure Elasticsearch for Ubuntu.
 
