@@ -1,4 +1,4 @@
-# Ansible Role: elasticsearhc
+# Ansible Role: elasticsearch
 
 Ansible Role to install and configure Elasticsearch for Ubuntu.
 
