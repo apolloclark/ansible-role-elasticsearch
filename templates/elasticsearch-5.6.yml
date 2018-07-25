@@ -1,0 +1,439 @@
+# ======================== Elasticsearch Configuration =========================
+#
+# NOTE: Elasticsearch comes with reasonable defaults for most settings.
+#       Before you set out to tweak and tune the configuration, make sure you
+#       understand what are you trying to accomplish and the consequences.
+#
+# The primary way of configuring a node is via this file. This template lists
+# the most important settings you may want to configure for a production cluster.
+#
+# Please see the documentation for further information on configuration options:
+# <http://www.elastic.co/guide/en/elasticsearch/reference/5.6/setup-configuration.html>
+
+{% if 'cluster' in elasticsearch_combined %}
+#
+# ---------------------------------- Cluster -----------------------------------
+#
+# Set a descriptive name for your cluster:
+cluster.name: "{{ elasticsearch_combined.cluster.name }}"
+{% endif %}
+
+
+
+
+
+{% if 'node' in elasticsearch_combined %}
+#
+# ------------------------------------ Node ------------------------------------
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-node.html
+#
+node:
+
+{% if 'name' in elasticsearch_combined.node %}
+  # Name of the node instance
+  name: "{{ elasticsearch_combined.node.name }}"
+{% endif %}
+
+{% if 'master' in elasticsearch_combined.node %}
+  # Set if the node can become a master instance, which controls the cluster.
+  master: "{{ elasticsearch_combined.node.master }}"
+{% endif %}
+
+{% if 'data' in elasticsearch_combined.node %}
+  # Set if the node can hold data and perform operations such as CRUD, search,
+  # and aggregations.
+  data: "{{ elasticsearch_combined.node.data }}"
+{% endif %}
+
+{% if 'ingest' in elasticsearch_combined.node %}
+  # Set if the node can be used for ingest processing to a document in order to
+  # transform and enrich the document before indexing.
+  ingest: "{{ elasticsearch_combined.node.ingest }}"
+{% endif %}
+
+{% if 'max_local_storage_nodes' in elasticsearch_combined.node %}
+  # Disable starting multiple nodes on a single system:
+  max_local_storage_nodes: {{ elasticsearch_combined.node.max_local_storage_nodes }}
+{% endif %}
+{% endif %}
+
+
+
+
+
+{% if 'path' in elasticsearch_combined %}
+#
+# ----------------------------------- Paths ------------------------------------
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-node.html#_node_data_path_settings
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/_path_to_data_on_disk.html
+#
+path:
+
+{% if 'data' in elasticsearch_combined.path %}
+  # Path to directory where to store the data
+  data: "{{ elasticsearch_combined.path.data }}"
+{% endif %}
+
+{% if 'logs' in elasticsearch_combined.path %}
+  # Path to directory where to store log data
+  logs: "{{ elasticsearch_combined.path.logs }}"
+{% endif %}
+{% endif %}
+
+
+
+
+
+{% if 'bootstrap' in elasticsearch_combined %}
+#
+# ----------------------------------- Memory -----------------------------------
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/important-settings.html#bootstrap.memory_lock
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/_memory_lock_check.html
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/setup-configuration-memory.html#mlockall
+
+# Lock the memory on startup:
+bootstrap.memory_lock: "{{ elasticsearch_combined.bootstrap.memory_lock }}"
+#
+# Make sure that the `ES_HEAP_SIZE` environment variable is set to about half the memory
+# available on the system and that the owner of the process is allowed to use this limit.
+#
+# Elasticsearch performs poorly when the system is swapping the memory.
+{% endif %}
+
+
+
+
+
+{% if 'network' in elasticsearch_combined %}
+#
+# ---------------------------------- Network -----------------------------------
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-network.html
+#
+network:
+
+{% if 'host' in elasticsearch_combined.network %}
+  # Set the service address to a specific IP (IPv4 or IPv6):
+  host: {{ elasticsearch_combined.network.host }}
+{% endif %}
+
+{% if 'bind_host' in elasticsearch_combined.network %}
+  # Set the bind address to a specific IP (IPv4 or IPv6):
+  bind_host: {{ elasticsearch_combined.network.bind_host }}
+{% endif %}
+
+{% if 'publish_host' in elasticsearch_combined.network %}
+  # Set the publishing address to a specific IP (IPv4 or IPv6):
+  publish_host: {{ elasticsearch_combined.network.publish_host }}
+{% endif %}
+
+{% if 'tcp' in elasticsearch_combined.network %}
+#
+# Configure shared TCP settings
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-network.html#tcp-settings
+#
+  tcp:
+
+{% if 'keep_alive' in elasticsearch_combined.network.tcp %}
+    keep_alive: "{{ elasticsearch_combined.network.tcp.keep_alive }}"
+{% endif %}
+
+{% if 'reuse_address' in elasticsearch_combined.network.tcp %}
+    reuse_address: "{{ elasticsearch_combined.network.tcp.reuse_address }}"
+{% endif %}
+
+{% if 'send_buffer_size' in elasticsearch_combined.network.tcp %}
+    send_buffer_size: {{ elasticsearch_combined.network.tcp.send_buffer_size }}
+{% endif %}
+
+{% if 'receive_buffer_size' in elasticsearch_combined.network.tcp %}
+    receive_buffer_size: {{ elasticsearch_combined.network.tcp.receive_buffer_size }}
+{% endif %}
+{% endif %}
+{% endif %}
+
+
+
+
+
+{% if 'transport' in elasticsearch_combined %}
+#
+# --------------------------------- Transport ----------------------------------
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-transport.html
+#
+transport:
+
+{% if 'publish_port' in elasticsearch_combined.transport %}
+  publish_port: {{ elasticsearch_combined.transport.publish_port }}
+{% endif %}
+
+{% if 'publish_host' in elasticsearch_combined.transport %}
+  publish_host: {{ elasticsearch_combined.transport.publish_host }}
+{% endif %}
+
+{% if 'bind_host' in elasticsearch_combined.transport %}
+  bind_host: {{ elasticsearch_combined.transport.bind_host }}
+{% endif %}
+
+{% if 'host' in elasticsearch_combined.transport %}
+  host: {{ elasticsearch_combined.transport.host }}
+{% endif %}
+
+{% if 'ping_schedule' in elasticsearch_combined.transport %}
+  ping_schedule: "{{ elasticsearch_combined.transport.ping_schedule }}"
+{% endif %}
+
+{% if 'tcp_no_delay' in elasticsearch_combined.transport %}
+  tcp_no_delay: "{{ elasticsearch_combined.transport.tcp_no_delay }}"
+{% endif %}
+
+{% if 'tcp' in elasticsearch_combined.transport %}
+#
+# Configure TCP settings
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-network.html#tcp-settings
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-transport.html#_tcp_transport
+#
+  tcp:
+
+{% if 'port' in elasticsearch_combined.transport.tcp %}
+    port: "{{ elasticsearch_combined.transport.tcp.port }}"
+{% endif %}
+
+{% if 'compress' in elasticsearch_combined.transport.tcp %}
+    compress: "{{ elasticsearch_combined.transport.tcp.compress }}"
+{% endif %}
+
+{% if 'connect_timeout' in elasticsearch_combined.transport.tcp %}
+    connect_timeout: "{{ elasticsearch_combined.transport.tcp.connect_timeout }}"
+{% endif %}
+
+{% if 'keep_alive' in elasticsearch_combined.transport.tcp %}
+    keep_alive: "{{ elasticsearch_combined.transport.tcp.keep_alive }}"
+{% endif %}
+
+{% if 'reuse_address' in elasticsearch_combined.transport.tcp %}
+    reuse_address: "{{ elasticsearch_combined.transport.tcp.reuse_address }}"
+{% endif %}
+
+{% if 'send_buffer_size' in elasticsearch_combined.transport.tcp %}
+    send_buffer_size: {{ elasticsearch_combined.transport.tcp.send_buffer_size }}
+{% endif %}
+
+{% if 'receive_buffer_size' in elasticsearch_combined.transport.tcp %}
+    receive_buffer_size: {{ elasticsearch_combined.transport.tcp.receive_buffer_size }}
+{% endif %}
+{% endif %}
+{% endif %}
+
+
+
+
+
+{% if 'http' in elasticsearch_combined %}
+#
+# ------------------------------------ HTTP ------------------------------------
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-http.html
+#
+http:
+
+{% if 'enabled' in elasticsearch_combined.http %}
+  enabled: "{{ elasticsearch_combined.http.enabled }}"
+{% endif %}
+
+{% if 'port' in elasticsearch_combined.http %}
+  port: "{{ elasticsearch_combined.http.port }}"
+{% endif %}
+
+
+{% if 'publish_port' in elasticsearch_combined.http %}
+  publish_port: {{ elasticsearch_combined.http.publish_port }}
+{% endif %}
+
+
+{% if 'bind_host' in elasticsearch_combined.http %}
+  bind_host: {{ elasticsearch_combined.http.bind_host }}
+{% endif %}
+
+
+{% if 'publish_host' in elasticsearch_combined.http %}
+  publish_host: {{ elasticsearch_combined.http.publish_host }}
+{% endif %}
+
+
+{% if 'host' in elasticsearch_combined.http %}
+  host: {{ elasticsearch_combined.http.host }}
+{% endif %}
+
+
+{% if 'max_content_length' in elasticsearch_combined.http %}
+  max_content_length: "{{ elasticsearch_combined.http.max_content_length }}"
+{% endif %}
+
+
+{% if 'max_initial_line_length' in elasticsearch_combined.http %}
+  max_initial_line_length: "{{ elasticsearch_combined.http.max_initial_line_length }}"
+{% endif %}
+
+
+{% if 'max_header_size' in elasticsearch_combined.http %}
+  max_header_size: "{{ elasticsearch_combined.http.max_header_size }}"
+{% endif %}
+
+
+{% if 'compression' in elasticsearch_combined.http %}
+  compression: "{{ elasticsearch_combined.http.compression }}"
+{% endif %}
+
+
+{% if 'compression_level' in elasticsearch_combined.http %}
+  compression_level: {{ elasticsearch_combined.http.compression_level }}
+{% endif %}
+
+
+{% if 'cors' in elasticsearch_combined.http %}
+  cors:
+
+{% if 'enabled' in elasticsearch_combined.http.cors %}
+    enabled: "{{ elasticsearch_combined.http.cors.enabled }}"
+{% endif %}
+
+{% if 'allow_origin' in elasticsearch_combined.http.cors %}
+    allow-origin: {{ elasticsearch_combined.http.cors.allow_origin }}
+{% endif %}
+
+{% if 'max_age' in elasticsearch_combined.http.cors %}
+    max-age: {{ elasticsearch_combined.http.cors.max_age }}
+{% endif %}
+
+{% if 'allow_methods' in elasticsearch_combined.http.cors %}
+    allow-methods: "{{ elasticsearch_combined.http.cors.allow_methods }}"
+{% endif %}
+
+{% if 'allow_headers' in elasticsearch_combined.http.cors %}
+    allow-headers: "{{ elasticsearch_combined.http.cors.allow_headers }}"
+{% endif %}
+
+{% if 'allow_credentials' in elasticsearch_combined.http.cors %}
+    allow-credentials: "{{ elasticsearch_combined.http.cors.allow_credentials }}"
+{% endif %}
+{% endif %}
+
+
+{% if 'detailed_errors' in elasticsearch_combined.http %}
+  detailed_errors:
+
+    enabled: "{{ elasticsearch_combined.http.detailed_errors.enabled }}"
+{% endif %}
+
+
+{% if 'pipelining' in elasticsearch_combined.http %}
+  pipelining: "{{ elasticsearch_combined.http.pipelining }}"
+{% endif %}
+
+
+{% if 'content_type' in elasticsearch_combined.http %}
+  content_type:
+
+    required: "{{ elasticsearch_combined.http.content_type.required }}"
+{% endif %}
+{% endif %}
+
+
+
+
+{% if 'discovery' in elasticsearch_combined %}
+#
+# --------------------------------- Discovery ----------------------------------
+#
+# http://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-discovery.html
+#
+discovery:
+{% if 'zen' in elasticsearch_combined.discovery %}
+  zen:
+{% endif %}
+{% if 'ping' in elasticsearch_combined.discovery.zen %}
+    ping:
+{% endif %}
+{% if 'unicast' in elasticsearch_combined.discovery.zen.ping %}
+      unicast:
+        # Pass an initial list of hosts to perform discovery when new node is started:
+        # The default list of hosts is ["127.0.0.1", "[::1]"]
+{% endif %}
+{% if 'hosts' in elasticsearch_combined.discovery.zen.ping.unicast %}
+        hosts: {{ elasticsearch_combined.discovery.zen.ping.unicast.hosts }}
+{% endif %}
+    # Prevent the "split brain" by configuring the majority of nodes
+    # (total number of nodes / 2 + 1):
+{% if 'minimum_master_nodes' in elasticsearch_combined.discovery.zen %}
+    minimum_master_nodes: {{ elasticsearch_combined.discovery.zen.minimum_master_nodes }}
+{% endif %}
+{% endif %}
+
+
+
+
+
+{% if 'gateway' in elasticsearch_combined %}
+#
+# ---------------------------------- Gateway -----------------------------------
+#
+# Configure Gateway settings
+#
+# http://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-gateway.html
+#
+gateway:
+
+{% if 'expected_nodes' in elasticsearch_combined.gateway %}
+  # The number of (data or master) nodes that are expected to be in the cluster.
+  # Recovery of local shards will start as soon as the expected number of nodes
+  # have joined the cluster. Defaults to 0
+  expected_nodes: {{ elasticsearch_combined.gateway.expected_nodes }}
+{% endif %}
+
+{% if 'expected_master_nodes' in elasticsearch_combined.gateway %}
+  # The number of master nodes that are expected to be in the cluster. Recovery
+  # of local shards will start as soon as the expected number of master nodes
+  # have joined the cluster. Defaults to 0
+  expected_master_nodes: {{ elasticsearch_combined.gateway.expected_master_nodes }}
+{% endif %}
+
+{% if 'expected_data_nodes' in elasticsearch_combined.gateway %}
+  # The number of data nodes that are expected to be in the cluster. Recovery
+  # of local shards will start as soon as the expected number of data nodes
+  # have joined the cluster. Defaults to 0
+  expected_data_nodes: {{ elasticsearch_combined.gateway.expected_data_nodes }}
+{% endif %}
+
+{% if 'recover_after_time' in elasticsearch_combined.gateway %}
+  # If the expected number of nodes is not achieved, the recovery process waits
+  # for the configured amount of time before trying to recover regardless.
+  # Defaults to 5m if one of the expected_nodes settings is configured.
+  recover_after_time: "{{ elasticsearch_combined.gateway.recover_after_time }}"
+{% endif %}
+
+{% if 'recover_after_nodes' in elasticsearch_combined.gateway %}
+  # Recover as long as this many data or master nodes have joined the cluster.
+  recover_after_nodes: {{ elasticsearch_combined.gateway.recover_after_nodes }}
+{% endif %}
+
+{% if 'recover_after_master_nodes' in elasticsearch_combined.gateway %}
+  # Recover as long as this many master nodes have joined the cluster.
+  recover_after_master_nodes: {{ elasticsearch_combined.gateway.recover_after_master_nodes }}
+{% endif %}
+
+{% if 'recover_after_data_nodes' in elasticsearch_combined.gateway %}
+  # Recover as long as this many data nodes have joined the cluster.
+  recover_after_data_nodes: {{ elasticsearch_combined.gateway.recover_after_data_nodes }}
+{% endif %}
+{% endif %}
+
+
+
+action.destructive_requires_name: true

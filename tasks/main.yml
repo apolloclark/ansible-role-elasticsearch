@@ -1,4 +1,14 @@
 ---
+# https://docs.ansible.com/ansible/latest/modules/set_fact_module.html
+- name: Get the simplified major.minor version string
+  set_fact:
+    version_simple: "{{ elasticsearch.version | regex_replace('^([0-9])\\.([0-9]*).*', '\\1.\\2') }}"
+
+# https://docs.ansible.com/ansible/latest/modules/include_vars_module.html
+- name: Include defaults for configuration, per the installed version.
+  include_vars:
+    file: main-{{ version_simple }}.yml
+
 # http://docs.ansible.com/ansible/latest/set_fact_module.html
 - name: Merge elasticsearch_default and elasticsearch variables
   set_fact:
@@ -11,45 +21,69 @@
     url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
     id: "46095ACC8548582C1A2699A9D27D666CD88E42B4"
     state: present
+  when:
+    - (elasticsearch_combined.install_repo == 'true')
 
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
 # http://docs.ansible.com/ansible/latest/apt_repository_module.html
-- name: Add Elastic 5.x repo (if choosing the 5.x version)
+- name: Add Elastic 5.x repo (if choosing a 5.6.x version)
   apt_repository:
     repo: 'deb https://artifacts.elastic.co/packages/5.x/apt stable main'
     state: present
-  when: "elasticsearch_combined.version == '5.x'"
+  when:
+    - (elasticsearch_combined.version is version('5.6', '>='))
+    - (elasticsearch_combined.version is version('6', '<'))
+    - (elasticsearch_combined.install_repo == 'true')
+
+# http://docs.ansible.com/ansible/latest/apt_repository_module.html
+- name: Add Elastic 6.x repo (if choosing a 6.x version)
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
+    state: present
+  when:
+    - (elasticsearch_combined.version is version('6', '>='))
+    - (elasticsearch_combined.version is version('7', '<'))
+    - (elasticsearch_combined.install_repo == 'true')
   
   # https://www.elastic.co/guide/en/elasticsearch/reference/2.4/setup-repositories.html
   # https://packages.elastic.co/elasticsearch/2.x/debian
 
+# https://docs.ansible.com/ansible/latest/modules/apt_module.html
 - name: Update apt cache
   apt: update_cache=yes
-  when: (elasticsearch_combined.version == '5.x')
+  when:
+    - (elasticsearch_combined.install_repo == 'true')
 
-- name: Install from repo (if choosing the 5.x version)
+# https://docs.ansible.com/ansible/latest/modules/apt_module.html
+- name: Install from repo (if choosing a 5.x or 6.x version)
   apt:
     name: elasticsearch
     state: installed
-  when: (elasticsearch_combined.version == '5.x')
+  when:
+    - (elasticsearch_combined.version is version('5.6', '>='))
+    - (elasticsearch_combined.version is version('7', '<'))
 
 - name: Get the platform (i386 or amd64) of the virtual machine
   command: dpkg --print-architecture
   register: print_architecture
 
-- name: And set the actual platform value as a variable
+# https://docs.ansible.com/ansible/latest/modules/set_fact_module.html
+- name: Set the platform value as a variable
   set_fact:
     platform: "{{ print_architecture.stdout }}"
 
-- name: Download deb (if choosing a specific version)
+- name: Download deb (if choosing an older version)
   get_url:
     url={{ elastic_url }}/downloads/elasticsearch/elasticsearch-{{ elasticsearch_combined.version }}.deb
     dest=/opt/elasticsearch.deb
-  when: (elasticsearch_combined.version != '5.x')
+  when:
+    - (elasticsearch_combined.version is version('5.6', '<'))
 
-- name: Install from deb (if choosing a specific version)
+# https://docs.ansible.com/ansible/latest/modules/apt_module.html
+- name: Install from deb (if choosing an older version)
   apt: deb=/opt/elasticsearch.deb
-  when: (elasticsearch_combined.version != '5.x')
+  when:
+    - (elasticsearch_combined.version is version('5.6', '<'))
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Make sure Elasticsearch autostarts
@@ -57,16 +91,16 @@
     name: elasticsearch
     enabled: yes
 
-- name: Change Elasticsearch's memory usage to 512MB
+- name: Change Elasticsearch's memory usage
   lineinfile:
     dest: /etc/elasticsearch/jvm.options
     regexp: "^-Xms"
-    line: "-Xms512m"
+    line: "-Xms{{ elasticsearch_combined.memory_usage }}m"
     state: present
 - lineinfile:
     dest: /etc/elasticsearch/jvm.options
     regexp: "^-Xmx"
-    line: "-Xmx512m"
+    line: "-Xmx{{ elasticsearch_combined.memory_usage }}m"
     state: present
 
 - name: Set the ulimits
@@ -76,7 +110,7 @@
 # http://docs.ansible.com/ansible/latest/template_module.html
 - name: Copy config file
   template:
-    src: "elasticsearch.yml"
+    src: "elasticsearch-{{ version_simple }}.yml"
     dest: "{{ elasticsearch_combined.config_include_dir }}/elasticsearch.yml"
     owner: root
     group: root
@@ -89,7 +123,7 @@
     state: restarted
     sleep: 15
 
-- name: Wait for Elasticsearch to become available
+- name: Wait for Elasticsearch to become available, on port 9200
   wait_for:
     port: 9200
     delay: 5

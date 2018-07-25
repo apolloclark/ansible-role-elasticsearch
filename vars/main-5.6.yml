@@ -1,22 +1,22 @@
 ---
-# https://www.elastic.co/guide/en/beats/elasticsearch/current/elasticsearch-overview.html
-# https://www.elastic.co/guide/en/beats/elasticsearch/current/configuring-howto-elasticsearch.html
-# https://www.elastic.co/guide/en/beats/elasticsearch/current/elasticsearch-configuration-options.html
+# https://www.elastic.co/guide/en/beats/elasticsearch/5.6/elasticsearch-overview.html
+# https://www.elastic.co/guide/en/beats/elasticsearch/5.6/configuring-howto-elasticsearch.html
+# https://www.elastic.co/guide/en/beats/elasticsearch/5.6/elasticsearch-configuration-options.html
 elastic_url: "https://artifacts.elastic.co"
 
 # Overload variables using the dict named elasticsearch
 elasticsearch:
-  version: "6.2.0"
+  version: "5.6.0"
 
 elasticsearch_defaults:
   daemon: "elasticsearch"
-  version: "6.2.0"
+  version: "5.6.0"
   config_include_dir: "/etc/elasticsearch/"
   install_only: "false"
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/setting-system-settings.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/setup.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/important-settings.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/setting-system-settings.html
   cluster:
     name: "elasticsearch"
   node:
@@ -29,26 +29,26 @@ elasticsearch_defaults:
     data: "/var/lib/elasticsearch/data"
     logs: "/var/log/elasticsearch"
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/important-settings.html#bootstrap.memory_lock
-  # https://www.elastic.co/guide/en/elasticsearch/reference/master/_memory_lock_check.html
-  # https://www.elastic.co/guide/en/elasticsearch/reference/master/setup-configuration-memory.html#mlockall
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/important-settings.html#bootstrap.memory_lock
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/_memory_lock_check.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/setup-configuration-memory.html#mlockall
   bootstrap:
     memory_lock: "false"
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-network.html
   network:
     host: "_local_"
     bind_host: "_local_"
     publish_host: "_local_"
     
-    # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html#tcp-settings
+    # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-network.html#tcp-settings
     tcp:
       keep_alive: "true"
       reuse_address: "true"
       # send_buffer_size: ""
       # receive_buffer_size: ""
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-transport.html
   transport:
     # publish_port: ""
     # publish_host: ""
@@ -57,8 +57,8 @@ elasticsearch_defaults:
     ping_schedule: "5s"
     tcp_no_delay: "true"
 
-    # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-network.html#tcp-settings
-    # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#_tcp_transport
+    # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-network.html#tcp-settings
+    # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-transport.html#_tcp_transport
     tcp:
       port: "9300-9400"
       compress: "true"
@@ -68,7 +68,7 @@ elasticsearch_defaults:
       # send_buffer_size: ""
       # receive_buffer_size: ""
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-http.html
   http:
     enabled: "true"
     port: "9200-9300"
@@ -95,7 +95,7 @@ elasticsearch_defaults:
     content_type:
       required: "false"
 
-  # http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html
+  # http://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-discovery.html
   discovery:
     zen:
       ping:
@@ -103,7 +103,7 @@ elasticsearch_defaults:
           hosts: '["127.0.0.1", "[::1]"]'
       minimum_master_nodes: 1
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/5.6/modules-gateway.html
   gateway:
     expected_nodes: 0
     expected_master_nodes: 0
