@@ -8,8 +8,10 @@ elasticsearch_defaults:
   daemon: "elasticsearch"
   version: "6.2.0"
   config_include_dir: "/etc/elasticsearch/"
-  install_only: "false"
-  install_repo: "true"
+  install_only: false
+  install_repo: true
+  install_plugins:
+    - "ingest-geoip"
   memory_usage: 512
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/setup.html
