@@ -20,8 +20,6 @@ cluster.name: "{{ elasticsearch_combined.cluster.name }}"
 
 
 
-
-
 {% if 'node' in elasticsearch_combined %}
 #
 # ------------------------------------ Node ------------------------------------
@@ -60,8 +58,6 @@ node:
 
 
 
-
-
 {% if 'path' in elasticsearch_combined %}
 #
 # ----------------------------------- Paths ------------------------------------
@@ -84,8 +80,6 @@ path:
 
 
 
-
-
 {% if 'bootstrap' in elasticsearch_combined %}
 #
 # ----------------------------------- Memory -----------------------------------
@@ -102,8 +96,6 @@ bootstrap.memory_lock: "{{ elasticsearch_combined.bootstrap.memory_lock }}"
 #
 # Elasticsearch performs poorly when the system is swapping the memory.
 {% endif %}
-
-
 
 
 
@@ -155,8 +147,6 @@ network:
 {% endif %}
 {% endif %}
 {% endif %}
-
-
 
 
 
@@ -230,8 +220,6 @@ transport:
 {% endif %}
 {% endif %}
 {% endif %}
-
-
 
 
 
@@ -347,7 +335,6 @@ http:
 
 
 
-
 {% if 'discovery' in elasticsearch_combined %}
 #
 # --------------------------------- Discovery ----------------------------------
@@ -375,8 +362,6 @@ discovery:
     minimum_master_nodes: {{ elasticsearch_combined.discovery.zen.minimum_master_nodes }}
 {% endif %}
 {% endif %}
-
-
 
 
 
