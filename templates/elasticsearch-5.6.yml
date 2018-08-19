@@ -15,7 +15,8 @@
 # ---------------------------------- Cluster -----------------------------------
 #
 # Set a descriptive name for your cluster:
-cluster.name: "{{ elasticsearch_combined.cluster.name }}"
+cluster:
+  name: "{{ elasticsearch_combined.cluster.name }}"
 {% endif %}
 
 
