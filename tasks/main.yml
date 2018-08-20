@@ -127,6 +127,10 @@
     name: "{{ elasticsearch_combined.daemon }}"
     state: restarted
 
+- name: Pause for Elasticsearch
+  pause:
+    seconds: 60
+
 - name: Restart Elasticsearch
   service:
     name: "{{ elasticsearch_combined.daemon }}"
