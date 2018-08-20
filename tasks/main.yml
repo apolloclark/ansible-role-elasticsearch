@@ -127,6 +127,11 @@
     name: "{{ elasticsearch_combined.daemon }}"
     state: restarted
 
+- name: Restart Elasticsearch
+  service:
+    name: "{{ elasticsearch_combined.daemon }}"
+    state: restarted
+
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Ensure that the service is running
   service: 
