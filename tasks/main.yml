@@ -143,3 +143,4 @@
   wait_for:
     port: 9200
     delay: 5
+    timeout: 60000
