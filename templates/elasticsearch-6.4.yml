@@ -9,7 +9,7 @@
 # the most important settings you may want to configure for a production cluster.
 #
 # Please see the documentation for further information on configuration options:
-# <http://www.elastic.co/guide/en/elasticsearch/reference/6.3/setup-configuration.html>
+# <http://www.elastic.co/guide/en/elasticsearch/reference/6.4/setup-configuration.html>
 
 {% if 'cluster' in elasticsearch_combined %}
 # ---------------------------------- Cluster -----------------------------------
@@ -23,7 +23,7 @@ cluster.name: "{{ elasticsearch_combined.cluster.name }}"
 {% if 'node' in elasticsearch_combined %}
 # ------------------------------------ Node ------------------------------------
 #
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-node.html
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-node.html
 #
 node:
 
@@ -60,8 +60,8 @@ node:
 {% if 'path' in elasticsearch_combined %}
 # ----------------------------------- Paths ------------------------------------
 #
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/path-settings.html
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-node.html#_node_data_path_settings
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/path-settings.html
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-node.html#_node_data_path_settings
 #
 path:
 
@@ -81,9 +81,9 @@ path:
 {% if 'bootstrap' in elasticsearch_combined %}
 # ----------------------------------- Memory -----------------------------------
 #
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/important-settings.html#bootstrap.memory_lock
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/_memory_lock_check.html
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/setup-configuration-memory.html#mlockall
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/important-settings.html#bootstrap.memory_lock
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/_memory_lock_check.html
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/setup-configuration-memory.html#mlockall
 
 # Lock the memory on startup:
 bootstrap.memory_lock: "{{ elasticsearch_combined.bootstrap.memory_lock }}"
@@ -99,7 +99,7 @@ bootstrap.memory_lock: "{{ elasticsearch_combined.bootstrap.memory_lock }}"
 {% if 'network' in elasticsearch_combined %}
 # ---------------------------------- Network -----------------------------------
 #
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-network.html
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-network.html
 #
 network:
 
@@ -122,7 +122,7 @@ network:
   #
   # Configure shared TCP settings
   #
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-network.html#tcp-settings
+  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-network.html#tcp-settings
   #
   tcp:
 
@@ -153,7 +153,7 @@ network:
 {% if 'transport' in elasticsearch_combined %}
 # --------------------------------- Transport ----------------------------------
 #
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-transport.html
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-transport.html
 #
 transport:
 
@@ -185,8 +185,8 @@ transport:
   #
   # Configure TCP settings
   #
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-network.html#tcp-settings
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-transport.html#_tcp_transport
+  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-network.html#tcp-settings
+  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-transport.html#_tcp_transport
   #
   tcp:
 
@@ -225,7 +225,7 @@ transport:
 {% if 'http' in elasticsearch_combined %}
 # ------------------------------------ HTTP ------------------------------------
 #
-# https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-http.html
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-http.html
 #
 http:
 
@@ -323,7 +323,7 @@ http:
 {% if 'discovery' in elasticsearch_combined %}
 # --------------------------------- Discovery ----------------------------------
 #
-# http://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-discovery.html
+# http://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-discovery.html
 #
 discovery:
   {% if 'zen' in elasticsearch_combined.discovery %}
@@ -355,7 +355,7 @@ discovery:
 #
 # Configure Gateway settings
 #
-# http://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-gateway.html
+# http://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-gateway.html
 #
 gateway:
 
