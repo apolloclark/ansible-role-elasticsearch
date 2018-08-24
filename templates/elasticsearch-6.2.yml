@@ -404,4 +404,23 @@ gateway:
 
 
 
+# ---------------------------------- Machine Learning -----------------------------------
+#
+# Configure Machine Learning settings
+#
+# https://www.elastic.co/guide/en/elasticsearch/reference/6.2/ml-settings.html
+{% if 'xpack' in elasticsearch_combined %}
+xpack:
+
+  {% if 'ml' in elasticsearch_combined.xpack %}
+  ml:
+
+    {% if 'enabled' in elasticsearch_combined.xpack.ml %}
+    enabled: {{ elasticsearch_combined.xpack.ml.enabled }}
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+
+
 action.destructive_requires_name: true

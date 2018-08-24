@@ -13,7 +13,7 @@ Default values are in `defaults/main.yml`. You can overload the variables by
 creating a dictionary called "elasticsearch", ex:
 
     elasticsearch:
-      version: 5.6.2
+      version: 6.4.0
 
 ## Dependencies
 

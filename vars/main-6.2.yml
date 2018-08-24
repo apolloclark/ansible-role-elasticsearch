@@ -33,7 +33,7 @@ elasticsearch_defaults:
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/_memory_lock_check.html
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/setup-configuration-memory.html#mlockall
   bootstrap:
-    memory_lock: "false"
+    memory_lock: false
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-network.html
   network:
@@ -89,7 +89,7 @@ elasticsearch_defaults:
       max_age: 1728000
       allow_methods: "OPTIONS, HEAD, GET, POST, PUT, DELETE"
       allow_headers: "X-Requested-With, Content-Type, Content-Length"
-      allow_credentials: "false"
+      allow_credentials: false
     detailed_errors:
       enabled: "true"
     pipelining: "true"
@@ -113,3 +113,13 @@ elasticsearch_defaults:
     # recover_after_nodes: ""
     # recover_after_master_nodes: ""
     # recover_after_data_nodes: ""
+
+  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/ml-settings.html
+  xpack:
+    ml:
+      enabled: false
+      max_open_jobs: 20
+      max_machine_memory_percent: 30
+      max_model_memory_limit: ""
+      node_concurrent_job_allocations: 2
+
