@@ -21,9 +21,9 @@ elasticsearch_defaults:
     name: "elasticsearch"
   node:
     name: "${HOSTNAME}"
-    master: true
-    data: true
-    ingest: true
+    master: "true"
+    data: "true"
+    ingest: "true"
     max_local_storage_nodes: 1
   path:
     data: "/var/lib/elasticsearch/data"
@@ -33,7 +33,7 @@ elasticsearch_defaults:
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/_memory_lock_check.html
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/setup-configuration-memory.html#mlockall
   bootstrap:
-    memory_lock: false
+    memory_lock: "false"
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-network.html
   network:
@@ -43,9 +43,9 @@ elasticsearch_defaults:
     
     # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-network.html#tcp-settings
     tcp:
-      keep_alive: true
-      reuse_address: true
-      no_delay: true
+      keep_alive: "true"
+      reuse_address: "true"
+      no_delay: "true"
       # send_buffer_size: ""
       # receive_buffer_size: ""
 
@@ -56,22 +56,22 @@ elasticsearch_defaults:
     # bind_host: ""
     # host: ""
     ping_schedule: "5s"
-    tcp_no_delay: true
+    tcp_no_delay: "true"
 
     # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-network.html#tcp-settings
     # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-transport.html#_tcp_transport
     tcp:
       port: "9300-9400"
-      compress: true
+      compress: "true"
       connect_timeout: "30s"
-      keep_alive: true
-      reuse_address: true
+      keep_alive: "true"
+      reuse_address: "true"
       # send_buffer_size: ""
       # receive_buffer_size: ""
 
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-http.html
   http:
-    enabled: true
+    enabled: "true"
     port: "9200-9300"
 
     # publish_port: ""
@@ -81,20 +81,20 @@ elasticsearch_defaults:
     max_content_length: "100mb"
     max_initial_line_length: "4kb"
     max_header_size: "8kb"
-    compression: true
+    compression: "true"
     compression_level: 3
     cors:
-      enabled: true
+      enabled: "true"
       allow_origin: /https?:\/\/.*/
       max_age: 1728000
       allow_methods: "OPTIONS, HEAD, GET, POST, PUT, DELETE"
       allow_headers: "X-Requested-With, Content-Type, Content-Length"
-      allow_credentials: false
+      allow_credentials: "false"
     detailed_errors:
-      enabled: true
-    pipelining: true
+      enabled: "true"
+    pipelining: "true"
     content_type:
-      required: true
+      required: "true"
 
   # http://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-discovery.html
   discovery:
@@ -117,7 +117,7 @@ elasticsearch_defaults:
   # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/ml-settings.html
   xpack:
     ml:
-      enabled: false
+      enabled: "false"
       max_open_jobs: 20
       max_machine_memory_percent: 30
       max_model_memory_limit: ""
