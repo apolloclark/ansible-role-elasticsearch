@@ -423,4 +423,5 @@ xpack:
 
 
 
+action.auto_create_index: true
 action.destructive_requires_name: true
