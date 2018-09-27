@@ -126,15 +126,21 @@
   service:
     name: "{{ elasticsearch_combined.daemon }}"
     state: restarted
+  when:
+    - not elasticsearch_combined.install_only
 
 - name: Pause for Elasticsearch
   pause:
     seconds: 60
+  when:
+    - not elasticsearch_combined.install_only
 
 - name: Restart Elasticsearch
   service:
     name: "{{ elasticsearch_combined.daemon }}"
     state: restarted
+  when:
+    - not elasticsearch_combined.install_only
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Ensure that the service is running
@@ -142,9 +148,13 @@
     name: elasticsearch
     state: started
     enabled: yes
+  when:
+    - not elasticsearch_combined.install_only
 
 - name: Wait for Elasticsearch to become available, on port 9200
   wait_for:
     port: 9200
     delay: 5
     timeout: 60000
+  when:
+    - not elasticsearch_combined.install_only
