@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: elasticsearch
   author: apolloclark
   description: Install and configure Elasticsearch
   company: "Apollo Clark"
