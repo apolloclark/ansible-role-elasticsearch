@@ -21,6 +21,10 @@
     url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
     id: "46095ACC8548582C1A2699A9D27D666CD88E42B4"
     state: present
+  register: task_result
+  until: task_result is success
+  retries: 3
+  delay: 5
   when:
     - elasticsearch_combined.install_repo
 
@@ -47,6 +51,10 @@
 # https://docs.ansible.com/ansible/latest/modules/apt_module.html
 - name: Update apt cache
   apt: update_cache=yes
+  register: task_result
+  until: task_result is success
+  retries: 3
+  delay: 5
   when:
     - elasticsearch_combined.install_repo
 
@@ -88,7 +96,8 @@
     regexp: "^-Xms"
     line: "-Xms{{ elasticsearch_combined.memory_usage }}m"
     state: present
-- lineinfile:
+- name: Change Elasticsearch's memory usage
+  lineinfile:
     dest: /etc/elasticsearch/jvm.options
     regexp: "^-Xmx"
     line: "-Xmx{{ elasticsearch_combined.memory_usage }}m"
@@ -97,7 +106,9 @@
 - name: Set the ulimits
   shell: ulimit -n 65536
   when: set_ulimits
-- shell: ulimit -l unlimited
+
+- name: Set the ulimits
+  shell: ulimit -l unlimited
   when: set_ulimits
 
 # http://docs.ansible.com/ansible/latest/template_module.html
@@ -146,7 +157,7 @@
 
 # http://docs.ansible.com/ansible/latest/service_module.html
 - name: Ensure that the service is running
-  service: 
+  service:
     name: elasticsearch
     state: started
     enabled: yes
