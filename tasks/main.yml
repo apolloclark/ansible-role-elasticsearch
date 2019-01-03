@@ -96,7 +96,9 @@
 
 - name: Set the ulimits
   shell: ulimit -n 65536
+  when: set_ulimits
 - shell: ulimit -l unlimited
+  when: set_ulimits
 
 # http://docs.ansible.com/ansible/latest/template_module.html
 - name: Copy config file

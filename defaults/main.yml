@@ -7,3 +7,18 @@ elastic_url: "https://artifacts.elastic.co"
 # Overload variables using the dict named elasticsearch
 elasticsearch:
   version: "6.4.0"
+  config_include_dir: "/etc/elasticsearch/"
+  install_only: false
+  install_repo: true
+  set_ulimits: true
+  cluster:
+    name: "elasticsearch"
+  node:
+    name: "${HOSTNAME}"
+    master: "true"
+    data: "true"
+    ingest: "true"
+    max_local_storage_nodes: 1
+  path:
+    data: "/var/lib/elasticsearch/data"
+    logs: "/var/log/elasticsearch"
