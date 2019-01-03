@@ -105,11 +105,13 @@
 
 - name: Set the ulimits
   shell: ulimit -n 65536
-  when: set_ulimits
+  when:
+    - elasticsearch_combined.set_ulimits
 
 - name: Set the ulimits
   shell: ulimit -l unlimited
-  when: set_ulimits
+  when:
+    - elasticsearch_combined.set_ulimits
 
 # http://docs.ansible.com/ansible/latest/template_module.html
 - name: Copy config file
