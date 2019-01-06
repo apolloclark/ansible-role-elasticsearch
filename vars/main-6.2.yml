@@ -123,4 +123,3 @@ elasticsearch_defaults:
       max_machine_memory_percent: 30
       max_model_memory_limit: ""
       node_concurrent_job_allocations: 2
-
