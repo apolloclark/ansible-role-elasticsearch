@@ -10,6 +10,7 @@ elasticsearch_defaults:
   config_include_dir: "/etc/elasticsearch/"
   install_only: false
   install_repo: true
+  set_ulimits: true
   install_plugins:
     - "ingest-geoip"
   memory_usage: 512
