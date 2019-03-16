@@ -14,81 +14,16 @@
   set_fact:
     elasticsearch_combined: "{{ elasticsearch_defaults | combine(elasticsearch, recursive=True) }}"
 
-# https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
-# http://docs.ansible.com/ansible/latest/apt_key_module.html
-- name: Add repository key
-  apt_key:
-    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
-    id: "46095ACC8548582C1A2699A9D27D666CD88E42B4"
-    state: present
-  register: task_result
-  until: task_result is success
-  retries: 3
-  delay: 5
+# Include OS-specific installation tasks.
+- include_tasks: setup-RedHat.yml
   when:
-    - elasticsearch_combined.install_repo
+    - ansible_os_family == 'RedHat'
 
-# http://docs.ansible.com/ansible/latest/apt_repository_module.html
-- name: Add Elastic 5.x repo (if choosing a 5.6.x version)
-  apt_repository:
-    repo: 'deb https://artifacts.elastic.co/packages/5.x/apt stable main'
-    state: present
+- include_tasks: setup-Debian.yml
   when:
-    - elasticsearch_combined.version is version('5.6', '>=')
-    - elasticsearch_combined.version is version('6', '<')
-    - elasticsearch_combined.install_repo
+    - ansible_os_family == 'Debian'
 
-# http://docs.ansible.com/ansible/latest/apt_repository_module.html
-- name: Add Elastic 6.x repo (if choosing a 6.x version)
-  apt_repository:
-    repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
-    state: present
-  when:
-    - elasticsearch_combined.version is version('6', '>=')
-    - elasticsearch_combined.version is version('7', '<')
-    - elasticsearch_combined.install_repo
 
-# https://docs.ansible.com/ansible/latest/modules/apt_module.html
-- name: Update apt cache
-  apt: update_cache=yes
-  register: task_result
-  until: task_result is success
-  retries: 3
-  delay: 5
-  when:
-    - elasticsearch_combined.install_repo
-
-# https://docs.ansible.com/ansible/latest/modules/apt_module.html
-- name: Install from repo (if choosing a 5.x or 6.x version)
-  apt:
-    name: "elasticsearch={{ elasticsearch_combined.version }}"
-    state: present
-  when:
-    - elasticsearch_combined.version is version('5.6', '>=')
-    - elasticsearch_combined.version is version('7', '<')
-    - elasticsearch_combined.install_repo
-
-- name: Get the platform (i386 or amd64) of the virtual machine
-  command: dpkg --print-architecture
-  register: print_architecture
-
-# https://docs.ansible.com/ansible/latest/modules/set_fact_module.html
-- name: Set the platform value as a variable
-  set_fact:
-    platform: "{{ print_architecture.stdout }}"
-
-- name: Download deb (if choosing a specific version)
-  get_url:
-    url={{ elastic_url }}/downloads/elasticsearch/elasticsearch-{{ elasticsearch_combined.version }}.deb
-    dest=/opt/elasticsearch.deb
-  when:
-    - elasticsearch_combined.version is version('5.6', '<')
-
-# https://docs.ansible.com/ansible/latest/modules/apt_module.html
-- name: Install from deb (if choosing a specific version)
-  apt: deb=/opt/elasticsearch.deb
-  when:
-    - elasticsearch_combined.version is version('5.6', '<')
 
 - name: Change Elasticsearch's memory usage
   lineinfile:

@@ -12,6 +12,10 @@ galaxy_info:
     - name: Ubuntu
       versions:
       - xenial
+      - bionic
+    - name: Centos
+      versions:
+      - 7.6
   galaxy_tags:
     - monitoring
     - metrics

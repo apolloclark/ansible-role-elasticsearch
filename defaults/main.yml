@@ -6,7 +6,7 @@ elastic_url: "https://artifacts.elastic.co"
 
 # Overload variables using the dict named elasticsearch
 elasticsearch:
-  version: "6.5.4"
+  version: "6.6.2"
   config_include_dir: "/etc/elasticsearch/"
   install_only: false
   install_repo: true

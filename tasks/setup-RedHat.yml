@@ -1,0 +1,73 @@
+---
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+# http://docs.ansible.com/ansible/latest/rpm_key_module.html
+- name: Add repository key
+  rpm_key:
+    key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+  register: task_result
+  until: task_result is success
+  retries: 3
+  delay: 5
+  when:
+    - elasticsearch_combined.install_repo
+
+# http://docs.ansible.com/ansible/latest/yum_repository_module.html
+- name: Add Elastic 5.x repo (if choosing a 5.6.x version)
+  yum_repository:
+    name: 'elasticsearch-5.x'
+    description: 'Elasticsearch repository for 5.x packages'
+    baseurl: 'https://artifacts.elastic.co/packages/5.x/yum'
+    state: present
+  when:
+    - elasticsearch_combined.version is version('5.6', '>=')
+    - elasticsearch_combined.version is version('6', '<')
+    - elasticsearch_combined.install_repo
+
+# http://docs.ansible.com/ansible/latest/yum_repository_module.html
+- name: Add Elastic 6.x repo (if choosing a 6.x version)
+  yum_repository:
+    name: 'elasticsearch-6.x'
+    description: 'Elasticsearch repository for 6.x packages'
+    baseurl: 'https://artifacts.elastic.co/packages/6.x/yum'
+    state: present
+  when:
+    - elasticsearch_combined.version is version('6', '>=')
+    - elasticsearch_combined.version is version('7', '<')
+    - elasticsearch_combined.install_repo
+
+# https://docs.ansible.com/ansible/latest/modules/yum_module.html
+- name: Update yum cache
+  yum: update_cache=yes
+  register: task_result
+  until: task_result is success
+  retries: 3
+  delay: 5
+  when:
+    - elasticsearch_combined.install_repo
+
+# https://docs.ansible.com/ansible/latest/modules/yum_module.html
+- name: Install from repo (if choosing a 5.x or 6.x version)
+  yum:
+    name: "elasticsearch-{{ elasticsearch_combined.version }}"
+    allow_downgrade: true
+    update_cache: yes
+    state: installed
+  when:
+    - elasticsearch_combined.version is version('5.6', '>=')
+    - elasticsearch_combined.version is version('7', '<')
+    - elasticsearch_combined.install_repo
+
+- name: Download rpm (if choosing an older version)
+  get_url:
+    url={{ elastic_url }}/downloads/elasticsearch/elasticsearch-{{ elasticsearch_combined.version }}.rpm
+    dest=/opt/elasticsearch.rpm
+  when:
+    - elasticsearch_combined.version is version('5.6', '<')
+
+# https://docs.ansible.com/ansible/latest/modules/yum_module.html
+- name: Install from rpm (if choosing a specific version)
+  yum:
+    name: /opt/elasticsearch.deb
+  when:
+    - elasticsearch_combined.version is version('5.6', '<')
