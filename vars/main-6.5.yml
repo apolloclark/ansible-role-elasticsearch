@@ -6,7 +6,7 @@ elastic_url: "https://artifacts.elastic.co"
 
 elasticsearch_defaults:
   daemon: "elasticsearch"
-  version: "6.5.4"
+  version: "6.5.0"
   config_include_dir: "/etc/elasticsearch/"
   install_only: false
   install_repo: true
