@@ -22,3 +22,6 @@ elasticsearch:
   path:
     data: "/var/lib/elasticsearch/data"
     logs: "/var/log/elasticsearch"
+  action:
+    auto_create_index: "true"
+    destructive_requires_name: "true"

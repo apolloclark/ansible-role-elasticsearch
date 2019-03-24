@@ -423,5 +423,21 @@ xpack:
 
 
 
-action.auto_create_index: true
-action.destructive_requires_name: true
+# ---------------------------------- Actions -----------------------------------
+#
+# Configure Action settings
+#
+{% if 'action' in elasticsearch_combined %}
+action:
+  
+  {% if 'auto_create_index' in elasticsearch_combined.action %}
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html#index-creation
+  auto_create_index: {{ elasticsearch_combined.action.auto_create_index }}
+  {% endif %}
+
+  {% if 'auto_create_index' in elasticsearch_combined.action %}
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html
+  destructive_requires_name: {{ elasticsearch_combined.action.destructive_requires_name }}
+  {% endif %}
+{% endif %}
+

@@ -114,3 +114,8 @@ elasticsearch_defaults:
     # recover_after_nodes: ""
     # recover_after_master_nodes: ""
     # recover_after_data_nodes: ""
+
+  action:
+    auto_create_index: "true"
+    destructive_requires_name: "true"
+
