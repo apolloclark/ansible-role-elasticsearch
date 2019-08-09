@@ -11,11 +11,11 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-      - xenial
-      - bionic
+        - xenial
+        - bionic
     - name: Centos
       versions:
-      - 7.6
+        - 7.6
   galaxy_tags:
     - monitoring
     - metrics

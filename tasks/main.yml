@@ -38,20 +38,19 @@
     line: "-Xmx{{ elasticsearch_combined.memory_usage }}m"
     state: present
 
-- name: Set the ulimits
-  shell: ulimit -n 65536
-  when:
-    - elasticsearch_combined.set_ulimits
-
-- name: Set the ulimits
-  shell: ulimit -l unlimited
+- name: Set the open file limits
+  pam_limits:
+    domain: '*'
+    limit_item: nofile
+    limit_type: hard
+    value: '65536'
   when:
     - elasticsearch_combined.set_ulimits
 
 # http://docs.ansible.com/ansible/latest/template_module.html
 - name: Copy config file
   template:
-    src: "elasticsearch-{{ version_simple }}.yml"
+    src: "elasticsearch-{{ version_simple }}.j2"
     dest: "{{ elasticsearch_combined.config_include_dir }}/elasticsearch.yml"
     owner: root
     group: root
@@ -66,14 +65,14 @@
   when:
     - elasticsearch_combined.install_plugins
 
-# http://docs.ansible.com/ansible/latest/service_module.html
+# http://docs.ansible.com/ansible/latest/systemd_module.html
 - name: Ensure elasticsearch auto-starts
-  service:
+  systemd:
     name: elasticsearch
     enabled: yes
 
 - name: Restart Elasticsearch
-  service:
+  systemd:
     name: "{{ elasticsearch_combined.daemon }}"
     state: restarted
   when:
@@ -86,18 +85,17 @@
     - not elasticsearch_combined.install_only
 
 - name: Restart Elasticsearch
-  service:
+  systemd:
     name: "{{ elasticsearch_combined.daemon }}"
     state: restarted
   when:
     - not elasticsearch_combined.install_only
 
-# http://docs.ansible.com/ansible/latest/service_module.html
+# http://docs.ansible.com/ansible/latest/systemd_module.html
 - name: Ensure that the service is running
-  service:
+  systemd:
     name: elasticsearch
     state: started
-    enabled: yes
   when:
     - not elasticsearch_combined.install_only
 

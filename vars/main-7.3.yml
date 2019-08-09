@@ -1,23 +1,26 @@
 ---
-# https://www.elastic.co/guide/en/beats/elasticsearch/6.4/elasticsearch-overview.html
-# https://www.elastic.co/guide/en/beats/elasticsearch/6.4/configuring-howto-elasticsearch.html
-# https://www.elastic.co/guide/en/beats/elasticsearch/6.4/elasticsearch-configuration-options.html
+# https://www.elastic.co/guide/en/beats/elasticsearch/7.3/elasticsearch-overview.html
+# https://www.elastic.co/guide/en/beats/elasticsearch/7.3/configuring-howto-elasticsearch.html
+# https://www.elastic.co/guide/en/beats/elasticsearch/7.3/elasticsearch-configuration-options.html
 elastic_url: "https://artifacts.elastic.co"
 
 elasticsearch_defaults:
   daemon: "elasticsearch"
-  version: "6.4.0"
+  version: "7.3.0"
   config_include_dir: "/etc/elasticsearch/"
   install_only: false
   install_repo: true
+  skip_restart: false
+  skip_start: false
+  sys_user: "root"
+  sys_group: "root"
   set_ulimits: true
-  install_plugins:
-    - "ingest-geoip"
+  install_plugins: []
   memory_usage: 512
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/setup.html
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/important-settings.html
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/setting-system-settings.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/setup.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/important-settings.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/setting-system-settings.html
   cluster:
     name: "elasticsearch"
   node:
@@ -30,19 +33,19 @@ elasticsearch_defaults:
     data: "/var/lib/elasticsearch/data"
     logs: "/var/log/elasticsearch"
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/important-settings.html#bootstrap.memory_lock
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/_memory_lock_check.html
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/setup-configuration-memory.html#mlockall
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/important-settings.html#bootstrap.memory_lock
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/_memory_lock_check.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/setup-configuration-memory.html#mlockall
   bootstrap:
     memory_lock: "false"
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-network.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-network.html
   network:
     host: "_local_"
     bind_host: "_local_"
     publish_host: "_local_"
 
-    # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-network.html#tcp-settings
+    # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-network.html#tcp-settings
     tcp:
       keep_alive: "true"
       reuse_address: "true"
@@ -50,7 +53,7 @@ elasticsearch_defaults:
       # send_buffer_size: ""
       # receive_buffer_size: ""
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-transport.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-transport.html
   transport:
     # publish_port: ""
     # publish_host: ""
@@ -59,8 +62,8 @@ elasticsearch_defaults:
     ping_schedule: "5s"
     tcp_no_delay: "true"
 
-    # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-network.html#tcp-settings
-    # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-transport.html#_tcp_transport
+    # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-network.html#tcp-settings
+    # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-transport.html#_tcp_transport
     tcp:
       port: "9300-9400"
       compress: "true"
@@ -70,7 +73,7 @@ elasticsearch_defaults:
       # send_buffer_size: ""
       # receive_buffer_size: ""
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-http.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-http.html
   http:
     enabled: "true"
     port: "9200-9300"
@@ -97,7 +100,7 @@ elasticsearch_defaults:
     content_type:
       required: "true"
 
-  # http://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-discovery.html
+  # http://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-discovery.html
   discovery:
     zen:
       ping:
@@ -105,7 +108,7 @@ elasticsearch_defaults:
           hosts: '["127.0.0.1", "[::1]"]'
       minimum_master_nodes: 1
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/modules-gateway.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/modules-gateway.html
   gateway:
     expected_nodes: 0
     expected_master_nodes: 0
@@ -115,7 +118,7 @@ elasticsearch_defaults:
     # recover_after_master_nodes: ""
     # recover_after_data_nodes: ""
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/6.4/ml-settings.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/7.3/ml-settings.html
   xpack:
     ml:
       enabled: "false"

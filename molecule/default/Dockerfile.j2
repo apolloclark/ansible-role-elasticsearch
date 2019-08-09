@@ -1,0 +1,14 @@
+# Molecule managed
+
+{% if item.registry is defined %}
+FROM {{ item.registry.url }}/{{ item.image }}
+{% else %}
+FROM {{ item.image }}
+{% endif %}
+
+ENTRYPOINT []
+
+# install the systemd replacement
+RUN curl -sLO https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl.py \
+  && yes | cp -f systemctl.py /usr/bin/systemctl \
+  && chmod a+x /usr/bin/systemctl

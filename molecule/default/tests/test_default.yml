@@ -1,0 +1,19 @@
+---
+package:
+  {{ elasticsearch_combined.daemon }}:
+    installed: true
+    versions:
+      - {{ elasticsearch_combined.version }}
+
+service:
+  {{ elasticsearch_combined.daemon }}:
+    enabled: true
+    running: false
+
+command:
+  /usr/share/elasticsearch/bin/elasticsearch --version:
+    exit-status: 0
+    stderr: []
+    stdout:
+      - "Version: {{ elasticsearch_combined.version }}"
+    timeout: 10000

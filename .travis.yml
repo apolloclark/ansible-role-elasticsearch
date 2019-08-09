@@ -1,0 +1,69 @@
+---
+language: python
+python: "2.7.15"
+sudo: required
+
+services:
+  - docker
+
+install:
+  - pip install pipenv
+  - pipenv install -r test-requirements.txt --python 2.7
+env:
+  global:
+    - PACKAGE=elasticsearch
+  matrix:
+    # RHEL 8.0
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel8.0
+      DOCKER_INST_NAME_SUFFIX=rhel_8.0
+      PACKAGE_VERSION=7.3.0
+
+    # RHEL 7.6
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel7.6
+      DOCKER_INST_NAME_SUFFIX=rhel_7.6
+      PACKAGE_VERSION=7.3.0
+
+    # CentOS 7.6
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-centos7.6
+      DOCKER_INST_NAME_SUFFIX=centos_7.6
+      PACKAGE_VERSION=7.3.0
+
+    # Ubuntu 18.04 Bionic
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-ubuntu18.04
+      DOCKER_INST_NAME_SUFFIX=ubuntu_18.04
+      PACKAGE_VERSION=7.3.0
+
+    # Ubuntu 16.04 Xenial
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-ubuntu16.04
+      DOCKER_INST_NAME_SUFFIX=ubuntu_16.04
+      PACKAGE_VERSION=7.3.0
+
+
+
+    # RHEL 8.0
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel8.0
+      DOCKER_INST_NAME_SUFFIX=rhel_8.0
+      PACKAGE_VERSION=6.8.2
+
+    # RHEL 7.6
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel7.6
+      DOCKER_INST_NAME_SUFFIX=rhel_7.6
+      PACKAGE_VERSION=6.8.2
+
+    # CentOS 7.6
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-centos7.6
+      DOCKER_INST_NAME_SUFFIX=centos_7.6
+      PACKAGE_VERSION=6.8.2
+
+    # Ubuntu 18.04 Bionic
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-ubuntu18.04
+      DOCKER_INST_NAME_SUFFIX=ubuntu_18.04
+      PACKAGE_VERSION=6.8.2
+
+    # Ubuntu 16.04 Xenial
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-ubuntu16.04
+      DOCKER_INST_NAME_SUFFIX=ubuntu_16.04
+      PACKAGE_VERSION=6.8.2
+
+script:
+  - pipenv run molecule test --all

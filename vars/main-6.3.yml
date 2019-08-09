@@ -40,7 +40,7 @@ elasticsearch_defaults:
     host: "_local_"
     bind_host: "_local_"
     publish_host: "_local_"
-    
+
     # https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-network.html#tcp-settings
     tcp:
       keep_alive: "true"
@@ -126,4 +126,3 @@ elasticsearch_defaults:
   action:
     auto_create_index: "true"
     destructive_requires_name: "true"
-

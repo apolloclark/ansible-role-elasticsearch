@@ -13,7 +13,7 @@ Default values are in `defaults/main.yml`. You can overload the variables by
 creating a dictionary called "elasticsearch", ex:
 
     elasticsearch:
-      version: 6.4.0
+      version: 7.3.0
 
 ## Dependencies
 
@@ -24,6 +24,50 @@ None.
     - hosts: all
       roles:
         - apolloclark.elasticsearch
+
+## Testing
+
+```sh
+# run all tests, against all supported OSes
+./travis_tests.sh
+
+
+
+# install dependencies, setup pipenv
+pip install --user pipenv
+pipenv install -r test-requirements.txt --python 2.7
+
+# run all test scenarios, defaults to Ubuntu 18.04 Bionic
+pipenv run molecule test --all
+
+# run a single test scenario
+pipenv run molecule test --scenario=[default]
+
+# build a specific environment, for manual debugging
+pipenv run molecule converge
+docker exec -it elasticsearch-ubuntu_bionic /bin/bash
+    cat /etc/os-release
+    ps aux
+    systemctl status elasticsearch
+    apt-get install -y net-tools curl nano
+    ss -tlu | netstat -tunlp
+    curl localhost:8080
+    cd /var/log/elasticsearch
+```
+
+## Notes
+
+```
+https://www.elastic.co/guide/en/elasticsearch/reference/current/release-highlights-7.1.0.html
+
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/breaking-changes-7.0.html
+
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/breaking-changes-7.1.html
+
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/breaking-changes-7.2.html
+
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/breaking-changes-7.3.html
+```
 
 ## License
 
