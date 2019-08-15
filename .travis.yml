@@ -38,6 +38,16 @@ env:
       DOCKER_INST_NAME_SUFFIX=ubuntu_16.04
       PACKAGE_VERSION=7.3.0
 
+    # Debian 10
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-debian10
+      DOCKER_INST_NAME_SUFFIX=debian10
+      PACKAGE_VERSION=7.3.0
+
+    # Debian 9
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-debian9
+      DOCKER_INST_NAME_SUFFIX=debian9
+      PACKAGE_VERSION=7.3.0
+
 
 
     # RHEL 8.0
@@ -63,6 +73,16 @@ env:
     # Ubuntu 16.04 Xenial
     - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-ubuntu16.04
       DOCKER_INST_NAME_SUFFIX=ubuntu_16.04
+      PACKAGE_VERSION=6.8.2
+
+    # Debian 10
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-debian10
+      DOCKER_INST_NAME_SUFFIX=debian10
+      PACKAGE_VERSION=6.8.2
+
+    # Debian 9
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-debian9
+      DOCKER_INST_NAME_SUFFIX=debian9
       PACKAGE_VERSION=6.8.2
 
 script:
