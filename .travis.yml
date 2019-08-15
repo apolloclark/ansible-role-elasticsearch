@@ -14,18 +14,18 @@ env:
     - PACKAGE=elasticsearch
   matrix:
     # RHEL 8.0
-    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel8.0
-      DOCKER_INST_NAME_SUFFIX=rhel_8.0
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel8
+      DOCKER_INST_NAME_SUFFIX=rhel_8
       PACKAGE_VERSION=7.3.0
 
     # RHEL 7.6
-    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel7.6
-      DOCKER_INST_NAME_SUFFIX=rhel_7.6
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel7
+      DOCKER_INST_NAME_SUFFIX=rhel_7
       PACKAGE_VERSION=7.3.0
 
     # CentOS 7.6
-    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-centos7.6
-      DOCKER_INST_NAME_SUFFIX=centos_7.6
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-centos7
+      DOCKER_INST_NAME_SUFFIX=centos_7
       PACKAGE_VERSION=7.3.0
 
     # Ubuntu 18.04 Bionic
@@ -41,18 +41,18 @@ env:
 
 
     # RHEL 8.0
-    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel8.0
-      DOCKER_INST_NAME_SUFFIX=rhel_8.0
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel8
+      DOCKER_INST_NAME_SUFFIX=rhel_8
       PACKAGE_VERSION=6.8.2
 
     # RHEL 7.6
-    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel7.6
-      DOCKER_INST_NAME_SUFFIX=rhel_7.6
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-rhel7
+      DOCKER_INST_NAME_SUFFIX=rhel_7
       PACKAGE_VERSION=6.8.2
 
     # CentOS 7.6
-    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-centos7.6
-      DOCKER_INST_NAME_SUFFIX=centos_7.6
+    - DOCKER_IMAGE_BASE=apolloclark/openjdk:11-centos7
+      DOCKER_INST_NAME_SUFFIX=centos_7
       PACKAGE_VERSION=6.8.2
 
     # Ubuntu 18.04 Bionic
