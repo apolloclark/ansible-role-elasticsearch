@@ -4,10 +4,6 @@
 # https://www.elastic.co/guide/en/beats/elasticsearch/5.6/elasticsearch-configuration-options.html
 elastic_url: "https://artifacts.elastic.co"
 
-# Overload variables using the dict named elasticsearch
-elasticsearch:
-  version: "5.6.0"
-
 elasticsearch_defaults:
   daemon: "elasticsearch"
   version: "5.6.0"
