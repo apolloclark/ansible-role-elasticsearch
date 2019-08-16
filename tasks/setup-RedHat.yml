@@ -6,22 +6,23 @@
   rpm_key:
     key: "https://packages.elastic.co/GPG-KEY-elasticsearch"
     state: present
+  register: task_result
+  until: task_result is success
+  retries: 3
+  delay: 5
   when:
     - elasticsearch_combined.install_repo
 
 # http://docs.ansible.com/ansible/latest/yum_repository_module.html
-- name: RedHat, Add Elastic 7.x repo (if choosing a 7.x version)
+- name: RedHat, Add Elastic 5.x repo (if choosing a 5.6.x version)
   yum_repository:
-    name: 'elastic-7.x'
-    description: 'Elastic repository for 7.x packages'
-    baseurl: 'https://artifacts.elastic.co/packages/7.x/yum'
-    gpgcheck: 1
-    gpgkey: 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
-    enabled: 1
+    name: 'elastic-5.x'
+    description: 'Elasticsearch repository for 5.x packages'
+    baseurl: 'https://artifacts.elastic.co/packages/5.x/yum'
     state: present
   when:
-    - elasticsearch_combined.version is version('7', '>=')
-    - elasticsearch_combined.version is version('8', '<')
+    - elasticsearch_combined.version is version('5.6', '>=')
+    - elasticsearch_combined.version is version('6', '<')
     - elasticsearch_combined.install_repo
 
 # http://docs.ansible.com/ansible/latest/yum_repository_module.html
@@ -40,15 +41,18 @@
     - elasticsearch_combined.install_repo
 
 # http://docs.ansible.com/ansible/latest/yum_repository_module.html
-- name: RedHat, Add Elastic 5.x repo (if choosing a 5.6.x version)
+- name: RedHat, Add Elastic 7.x repo (if choosing a 7.x version)
   yum_repository:
-    name: 'elasticsearch-5.x'
-    description: 'Elasticsearch repository for 5.x packages'
-    baseurl: 'https://artifacts.elastic.co/packages/5.x/yum'
+    name: 'elastic-7.x'
+    description: 'Elastic repository for 7.x packages'
+    baseurl: 'https://artifacts.elastic.co/packages/7.x/yum'
+    gpgcheck: 1
+    gpgkey: 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
+    enabled: 1
     state: present
   when:
-    - elasticsearch_combined.version is version('5.6', '>=')
-    - elasticsearch_combined.version is version('6', '<')
+    - elasticsearch_combined.version is version('7', '>=')
+    - elasticsearch_combined.version is version('8', '<')
     - elasticsearch_combined.install_repo
 
 # https://docs.ansible.com/ansible/latest/modules/yum_module.html
