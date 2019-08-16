@@ -37,6 +37,7 @@
     - name: Merge elasticsearch_default and elasticsearch variables
       set_fact:
         elasticsearch_combined: "{{ elasticsearch_defaults | combine(elasticsearch, recursive=True) }}"
+
     - name: Download and install goss
       get_url:
         url: "{{ goss_url }}"
