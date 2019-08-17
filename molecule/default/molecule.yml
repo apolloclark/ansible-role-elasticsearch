@@ -18,8 +18,7 @@ provisioner:
         ${PACKAGE:-package}:
           version: ${PACKAGE_VERSION:-7.0.0}
           install_only: true
-          skip_restart: true
-          skip_start: true
+          set_ulimits: false
   lint:
     name: ansible-lint
 verifier:
