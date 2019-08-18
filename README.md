@@ -1,7 +1,16 @@
 # Ansible Role: elasticsearch
 
-Ansible Role to install and configure Elasticsearch for Ubuntu.
+[![Build Status](https://travis-ci.org/apolloclark/ansible-role-elasticsearch.svg?branch=master)](https://travis-ci.org/apolloclark/ansible-role-elasticsearch)
 
+Ansible Role to install and configure Elasticsearch for:
+- Ubuntu 18.04 Bionic LTS
+- Ubuntu 16.04 Xenial LTS
+- Debian 10 Buster
+- Debian 9 Stretch
+- RHEL 8 UBI
+- RHEL 7 UBI
+- CentOS 7
+- Amazon Linux 2
 
 ## Requirements
 

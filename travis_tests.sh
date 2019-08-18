@@ -28,22 +28,22 @@ export DOCKER_IMAGE_BASE=apolloclark/openjdk:11-amzlinux2
 export DOCKER_INST_NAME_SUFFIX=amzlinux_2
 pipenv run molecule test --all
 
-# Ubuntu Bionic
+# Ubuntu 18.04 Bionic
 export DOCKER_IMAGE_BASE=apolloclark/openjdk:11-ubuntu18.04
 export DOCKER_INST_NAME_SUFFIX=ubuntu_18.04
 pipenv run molecule test --all
 
-# Ubuntu Xenial
+# Ubuntu 16.04 Xenial
 export DOCKER_IMAGE_BASE=apolloclark/openjdk:11-ubuntu16.04
 export DOCKER_INST_NAME_SUFFIX=ubuntu_16.04
 pipenv run molecule test --all
 
-# Debian 10
+# Debian 10 Buster
 export DOCKER_IMAGE_BASE=apolloclark/openjdk:11-debian10
 export DOCKER_INST_NAME_SUFFIX=debian_10
 pipenv run molecule test --all
 
-# Debian 9
+# Debian 9 Stretch
 export DOCKER_IMAGE_BASE=apolloclark/openjdk:11-debian9
 export DOCKER_INST_NAME_SUFFIX=debian_9
 pipenv run molecule test --all
